@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.*;
  * @date 2019/3/4 11:29
  */
 public class SortCompare {
-    public static double time(String alg, Double[] a) {
+    private static double time(String alg, Double[] a) {
         Stopwatch timer = new Stopwatch();
         if (alg.equals("Insertion")) {
             InsertSort.sort(a);
@@ -16,7 +16,7 @@ public class SortCompare {
             Selection.sort(a);
         }
         if (alg.equals("Shell")) {
-            Shell.sort(a);
+            ShellSort.sort(a);
         }
         if (alg.equals("Merge")) {
             Merge.sort(a);
@@ -38,7 +38,7 @@ public class SortCompare {
         return timer.elapsedTime();
     }
 
-    public static double timeRandomInput(String alg, int N, int T) {
+    private static double timeRandomInput(String alg, int N, int T) {
         double total = 0.0;
         Double[] a = new Double[N];
         for (int t = 0; t < T; t++) {
@@ -51,10 +51,10 @@ public class SortCompare {
     }
 
     public static void main(String[] args) {
-        String alg1 = args[0];
-        String alg2 = args[1];
-        int N = Integer.parseInt(args[2]);
-        int T = Integer.parseInt(args[3]);
+        String alg1 = "Shell";
+        String alg2 = "Insertion";
+        int N = 1024 * 64;
+        int T = 10;
         double t1 = timeRandomInput(alg1, N, T);
         double t2 = timeRandomInput(alg2, N, T);
         StdOut.printf("For %d random Doubles\n  %s is", N, alg1);
