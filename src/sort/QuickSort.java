@@ -14,15 +14,16 @@ public class QuickSort extends ProtoSort{
         int i = low, j = high+1;
         while (true){
             //开始移动i，扫描直到发现大于a[low]的值
+            //（注：扫描时，最好将判断条件设置为小于等于，以免浪费资源交换等值的元素，下面那个同理）
             while (less(a[++i], a[low])){
-                //防止超过数组上限
+                //防止超过数组上限（注：右侧判断条件不多余。但是可以使用哨兵来去掉。哨兵：在shuffle时，把a中最大元素放在最右侧）
                 if (i > high) {
                     break;
                 }
             }
             //开始移动j，扫描直到发现小于a[low]的值
             while (less(a[low], a[--j])){
-                //防止超过数组下限
+                //防止超过数组下限（注：左侧溢出的判断条件是多余的，可去掉）
                 if (j < low){
                     break;
                 }
