@@ -1,5 +1,7 @@
 package sort;
 
+import edu.princeton.cs.algs4.StdRandom;
+
 /**
  * @author 王俊杰
  * @date 2019/3/30 19:45
@@ -36,4 +38,29 @@ public class QuickSort extends ProtoSort{
         exchange(a, j, low);
         return j;
     }
+
+    /**内部接口**/
+    private static void sort(Comparable[] a, int low, int high){
+        if (low >= high){
+            return;
+        }
+        int j = partion(a, low, high);
+        sort(a, low, j-1);
+        sort(a, j+1, high);
+    }
+
+    /**外部接口**/
+    public static void sort(Comparable[] a){
+        StdRandom.shuffle(a);
+        sort(a, 0, a.length -1);
+    }
+
+    /** test */
+    public static void main(String[] arg){
+        Integer[] a = {1, 4, 5, 2, 6, 11, 8, 123, 12, 14, 31, 3, 51, 77, 888, 91};
+        sort(a);
+        assert isSorted(a);
+        show(a);
+    }
+
 }
