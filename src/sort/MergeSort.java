@@ -37,6 +37,7 @@ public class MergeSort extends ProtoSort{
     }
 
     public static void sort(Comparable[] a){
+        //先将a复制到 辅助数组aux中
         aux = new Comparable[a.length];
         sort(a, 0, a.length - 1);
     }
@@ -54,7 +55,7 @@ public class MergeSort extends ProtoSort{
 
     /** test */
     public static void main(String[] arg){
-        Integer[] a = {1, 4, 5, 2, 6, 11, 8};
+        Integer[] a = {1, 4, 5, 2, 6, 11, 8, 123, 12, 14, 31, 3, 51, 77, 888, 91};
         sort(a);
         assert isSorted(a);
         show(a);
