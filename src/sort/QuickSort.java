@@ -17,16 +17,16 @@ public class QuickSort extends ProtoSort{
             //（注：扫描时，最好将判断条件设置为小于等于，以免浪费资源交换等值的元素，下面那个同理）
             while (less(a[++i], a[low])){
                 //防止超过数组上限（注：右侧判断条件不多余。但是可以使用哨兵来去掉。哨兵：在shuffle时，把a中最大元素放在最右侧）
-                if (i > high) {
+                if (i == high) {
                     break;
                 }
             }
             //开始移动j，扫描直到发现小于a[low]的值
             while (less(a[low], a[--j])){
                 //防止超过数组下限（注：左侧溢出的判断条件是多余的，可去掉）
-                if (j < low){
-                    break;
-                }
+//                if (j == low){
+//                    break;
+//                }
             }
             //若ij cross了，则结束partion
             if (i >= j){
@@ -40,11 +40,38 @@ public class QuickSort extends ProtoSort{
         return j;
     }
 
+    /**使用三路划分，可以在处理有很多重复键时更高效**/
+    private static void threeWaySort(Comparable[] a, int low, int high){
+        if (low >= high){
+            return;
+        }
+        int lt = low, i = low+1, gt = high;
+        Comparable v = a[low];
+        while (i <= gt){
+            int cmp = a[i].compareTo(v);
+            if (cmp < 0){
+                exchange(a, lt++, i++);
+            }else if (cmp > 0){
+                exchange(a, gt--, i);
+            }else {
+                i++;
+            }
+        }
+        sort(a, low, lt-1);
+        sort(a, gt+1, high);
+    }
+
     /**内部接口**/
     private static void sort(Comparable[] a, int low, int high){
         if (low >= high){
             return;
         }
+        // 在对partition后的小数组排序用插入排序，效果更好。
+        // M一般为[5,15]
+        // if (high <= low + M){
+        //     InsertSort.sort(a, low, high);
+        //     return;
+        // }
         int j = partition(a, low, high);
         sort(a, low, j-1);
         sort(a, j+1, high);
