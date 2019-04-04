@@ -57,8 +57,8 @@ public class QuickSort extends ProtoSort{
                 i++;
             }
         }
-        sort(a, low, lt-1);
-        sort(a, gt+1, high);
+        threeWaySort(a, low, lt-1);
+        threeWaySort(a, gt+1, high);
     }
 
     /**内部接口**/
@@ -80,7 +80,7 @@ public class QuickSort extends ProtoSort{
     /**外部接口**/
     public static void sort(Comparable[] a){
         StdRandom.shuffle(a);
-        sort(a, 0, a.length -1);
+        threeWaySort(a, 0, a.length -1);
     }
 
     /** test */
