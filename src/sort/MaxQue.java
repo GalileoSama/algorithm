@@ -40,7 +40,7 @@ public class MaxQue<Key extends Comparable<Key>>{
         while (k*2 <= N){
             int child = 2 * k;
             //选出较大的子节点
-            if (less(child, child + 1)){
+            if (child < N && less(child, child + 1)){
                 child++;
             }
             if (!less(k ,child)){
