@@ -19,6 +19,14 @@ public class MaxQue<Key extends Comparable<Key>>{
         return pq[i].compareTo(pq[j]) < 0;
     }
 
+    private boolean isEmpty(){
+        return N == 0;
+    }
+
+    private int size(){
+        return N;
+    }
+
     /**上浮**/
     private void swim(int k){
         while (k > 1 && less(k/2, k)){
