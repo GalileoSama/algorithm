@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class SequentialSearchST<Key, Value> {
 
     private Node first;
-    int length;
+    private int length;
 
     private class Node{
         Key key;
@@ -96,14 +96,14 @@ public class SequentialSearchST<Key, Value> {
         }
 
         for (String s1 : st.keys()) {
-            StdOut.println("key"+s + " value:" + st.get(s1));
+            StdOut.println("key:"+s1 + " value:" + st.get(s1));
         }
 
         st.delete("a7");
 
         System.out.println("===after delete===");
         for (String s1 : st.keys()) {
-            StdOut.println("key"+s + " value:" + st.get(s1));
+            StdOut.println("key:"+s1 + " value:" + st.get(s1));
         }
     }
 }
