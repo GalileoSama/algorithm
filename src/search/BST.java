@@ -119,4 +119,46 @@ public class BST<Key extends Comparable<Key>, Value> {
         node.n = size(node.left)+size(node.right)+1;
         return node;
     }
+
+    /** 递归floor **/
+    public Key floor(Key key){
+        Node node = floor(root, key);
+        if (node == null){
+            return null;
+        }
+        return node.key;
+    }
+
+    private Node floor(Node node, Key key){
+        if (node == null){
+            return null;
+        }
+        int compare = node.key.compareTo(key);
+        if (compare == 0){
+            return node;
+        }
+        //左子树
+        if (compare > 0){
+            return floor(node.left, key);
+        }
+        //若右子树，要存在floor，才返回，否则返回根节点node
+        Node t = floor(node.right, key);
+        if (t != null){
+            return t;
+        }else {
+            return node;
+        }
+    }
+
+    /** 递归min **/
+    public Key min(){
+        return min(root).key;
+    }
+
+    private Node min(Node node){
+        if (node.left == null){
+            return node;
+        }
+        return min(node.left);
+    }
 }
