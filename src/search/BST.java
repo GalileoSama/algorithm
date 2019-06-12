@@ -204,4 +204,18 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
     }
 
+    /** 删除最小的节点 **/
+    public void deleteMin(){
+        deleteMin(root);
+    }
+
+    private Node deleteMin(Node node){
+        if (node.left == null){
+            return node.right;
+        }
+        node.left = deleteMin(node.left);
+        node.n = 1 + size(node.left) + size(node.right);
+        return node;
+    }
+
 }
