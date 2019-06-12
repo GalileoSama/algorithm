@@ -296,6 +296,18 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
     }
 
+    /** BST的高度 **/
+    public int height(){
+        return height(root);
+    }
+
+    private int height(Node node){
+        if (node == null){
+            return -1;
+        }
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
     public static void main(String[] args) {
         System.out.println("=====start=====");
         Random random = new Random();
@@ -319,6 +331,8 @@ public class BST<Key extends Comparable<Key>, Value> {
         System.out.println(bst.min());
         System.out.println("======测试max======");
         System.out.println(bst.max());
+        System.out.println("======测试height======");
+        System.out.println(bst.height());
         System.out.println("======测试deleteMin======");
         bst.deleteMin();
         System.out.println(bst.min());
