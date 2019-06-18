@@ -7,6 +7,7 @@ import java.util.Objects;
  * @date 2019/6/18 16:20
  */
 public class LinearProbingHashST<Key, Value> {
+    private static final int INIT_CAPACITY = 4;
     /** 数组长度 **/
     private int m = 16;
     /** 链表数量 **/
@@ -16,16 +17,30 @@ public class LinearProbingHashST<Key, Value> {
     private Value[] values;
 
     public LinearProbingHashST() {
-        keys = (Key[]) new Objects[m];
-        values = (Value[]) new Objects[m];
+       this(INIT_CAPACITY);
+    }
+
+    public LinearProbingHashST(int cap) {
+        keys = (Key[]) new Objects[cap];
+        values = (Value[]) new Objects[cap];
+        m = cap;
+        n = 0;
     }
 
     private int hash(Key key){
         return (key.hashCode() & 0x7fffffff) % m;
     }
 
-    private void resize(){
-
+    private void resize(int cap){
+        LinearProbingHashST<Key, Value> t = new LinearProbingHashST<>(cap);
+        for (int i = 0;i < m;i++){
+            if (keys[i] != null){
+                t.put(keys[i], values[i]);
+            }
+        }
+        keys = t.keys;
+        values = t.values;
+        m = t.m;
     }
 
     public Value get(Key key){
@@ -39,7 +54,7 @@ public class LinearProbingHashST<Key, Value> {
 
     public void put(Key key, Value value){
         if (n > m/2){
-            resize();
+            resize(2*m);
         }
         int i;
         for (i = hash(key); keys[i] != null; i = (i + 1)%m){
@@ -80,9 +95,9 @@ public class LinearProbingHashST<Key, Value> {
             i = (i + 1) % m;
         }
         n--;
-        //将m控制在 [m/8,m/2]这个范围内
+        //将n控制在 [m/8,m/2]这个范围内
         if (n > 0 && n == m/8){
-            resize();
+            resize(m/2);
         }
     }
 }
