@@ -35,4 +35,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> {
     public void put(Key key, Value value){
         st[hash(key)].put(key, value);
     }
+
+    public void delete(Key key){
+        st[hash(key)].delete(key);
+    }
 }
