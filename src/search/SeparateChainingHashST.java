@@ -1,5 +1,7 @@
 package search;
 
+import java.util.Random;
+
 /**
  * @author galileo
  * @date 2019/6/18 15:27
@@ -40,5 +42,30 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> {
 
     public void delete(Key key){
         st[hash(key)].delete(key);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=====start=====");
+        Random random = new Random();
+        SeparateChainingHashST<Integer, Integer> separateChainingHashSt = new SeparateChainingHashST<>(17);
+        System.out.println("======测试put======");
+
+        for (int i = 0; i<10;i++){
+            int k = random.nextInt(30);
+            separateChainingHashSt.put(k, i);
+        }
+
+        //测试删除用
+        separateChainingHashSt.put(11, 233);
+
+        System.out.println("======测试get======");
+        System.out.println(separateChainingHashSt.get(11));
+
+        System.out.println("======测试delete======");
+        separateChainingHashSt.delete(11);
+        System.out.println(separateChainingHashSt.get(11));
+
+
+        System.out.println("======end======");
     }
 }

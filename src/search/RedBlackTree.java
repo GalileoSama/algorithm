@@ -1,5 +1,9 @@
 package search;
 
+import edu.princeton.cs.algs4.Queue;
+
+import java.util.Random;
+
 /**
  * @author galileo
  * @date 2019/6/13 20:40
@@ -135,5 +139,79 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 
         h.n = 1 + size(h.left) + size(h.right);
         return h;
+    }
+
+    /** 范围查询 **/
+    public Iterable<Key> keys(){
+        return keys(min(), max());
+    }
+
+    public Iterable<Key> keys(Key lo, Key hi){
+        Queue<Key> queue = new Queue<>();
+        keys(root, queue, lo, hi);
+        return queue;
+    }
+
+    private void keys(Node node, Queue<Key> queue, Key lo, Key hi){
+        if (node == null){
+            return;
+        }
+        int compareLo = lo.compareTo(node.key);
+        int compareHi = hi.compareTo(node.key);
+        if (compareLo < 0){
+            keys(node.left, queue, lo, hi);
+        }
+        if (compareLo <= 0 && compareHi >= 0){
+            queue.enqueue(node.key);
+        }
+        if (compareHi > 0){
+            keys(node.right, queue, lo, hi);
+        }
+    }
+
+    /** 递归min **/
+    public Key min(){
+        return min(root).key;
+    }
+
+    private Node min(Node node){
+        if (node.left == null){
+            return node;
+        }
+        return min(node.left);
+    }
+
+    /** 递归max **/
+    public Key max(){
+        return max(root).key;
+    }
+
+    private Node max(Node node){
+        if (node.right == null){
+            return node;
+        }
+        return max(node.right);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=====start=====");
+        Random random = new Random();
+        RedBlackTree<Integer, Integer> redBlackTree = new RedBlackTree<>();
+        System.out.println("======测试递归put======");
+
+        for (int i = 0; i<10;i++){
+            int k = random.nextInt(30);
+            redBlackTree.put(k, i);
+        }
+
+        Iterable<Integer> keys = redBlackTree.keys();
+        keys.forEach(k ->System.out.println("keys : " + k ));
+
+        System.out.println("======测试min======");
+        System.out.println(redBlackTree.min());
+        System.out.println("======测试max======");
+        System.out.println(redBlackTree.max());
+
+        System.out.println("======end======");
     }
 }

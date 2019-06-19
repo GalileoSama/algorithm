@@ -1,6 +1,6 @@
 package search;
 
-import java.util.Objects;
+import java.util.Random;
 
 /**
  * @author galileo
@@ -21,10 +21,10 @@ public class LinearProbingHashST<Key, Value> {
     }
 
     public LinearProbingHashST(int cap) {
-        keys = (Key[]) new Objects[cap];
-        values = (Value[]) new Objects[cap];
         m = cap;
         n = 0;
+        keys = (Key[]) new Object[cap];
+        values = (Value[]) new Object[cap];
     }
 
     private int hash(Key key){
@@ -74,7 +74,7 @@ public class LinearProbingHashST<Key, Value> {
         //todo contains(key)
         //搜索key
         int i = hash(key);
-        while (keys[i] != null){
+        while (!key.equals(keys[i])){
             i = (i + 1) % m;
         }
         //删除
@@ -99,5 +99,29 @@ public class LinearProbingHashST<Key, Value> {
         if (n > 0 && n == m/8){
             resize(m/2);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=====start=====");
+        Random random = new Random();
+        LinearProbingHashST<String, Integer> linearProbingHashST = new LinearProbingHashST<>(17);
+        System.out.println("======测试put======");
+
+        //测试删除用
+        linearProbingHashST.put("s", 233);
+
+        for (int i = 0; i<10;i++){
+            int k = random.nextInt(30);
+            linearProbingHashST.put(k+"", i);
+        }
+
+        System.out.println("======测试get======");
+        System.out.println(linearProbingHashST.get("s"));
+
+        System.out.println("======测试delete======");
+        linearProbingHashST.delete("s");
+        System.out.println(linearProbingHashST.get("s"));
+
+        System.out.println("======end======");
     }
 }
