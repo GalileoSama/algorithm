@@ -25,6 +25,8 @@ public class SeparateChainingHashST<Key extends Comparable<Key>, Value> {
     }
 
     private int hash(Key key){
+        //注：这里不用Math.abs（）方法的原因是，Math.abs可能返回负值，在传入参数是最大负值，即Integer.MIN_VALUE时
+        //      因为Integer.MIN_VALUE没有对应的正数。int范围：[-2147483648,2147483647]
         return (key.hashCode() & 0x7fffffff) % m;
     }
 
