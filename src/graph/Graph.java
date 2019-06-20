@@ -21,21 +21,21 @@ public class Graph {
         }
     }
 
-    private int V(){
+    public int V(){
         return v;
     }
 
-    private int E(){
+    public int E(){
         return e;
     }
 
-    private void addEdge(int w, int v){
+    public void addEdge(int w, int v){
         adj[w].add(v);
         adj[v].add(w);
         e++;
     }
 
-    private Iterable<Integer> adj(int v){
+    public Iterable<Integer> adj(int v){
         return adj[v];
     }
 }
