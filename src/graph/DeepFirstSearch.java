@@ -10,7 +10,7 @@ public class DeepFirstSearch {
 
     public DeepFirstSearch(Graph graph, int s) {
         marked = new boolean[graph.V()];
-
+        dfs(graph, s);
     }
 
     public void dfs(Graph graph, int s){
