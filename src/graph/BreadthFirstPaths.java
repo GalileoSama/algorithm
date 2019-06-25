@@ -65,4 +65,30 @@ public class BreadthFirstPaths {
     public boolean hasPathTo(int w){
         return marked[w];
     }
+
+    public static void main(String[] args) {
+        Graph graph = new Graph(12);
+        graph.addEdge(8,4);
+        graph.addEdge(2,3);
+        graph.addEdge(1,11);
+        graph.addEdge(0,6);
+        graph.addEdge(3,6);
+        graph.addEdge(10,3);
+        graph.addEdge(7,11);
+        graph.addEdge(7,8);
+        graph.addEdge(11,8);
+        graph.addEdge(2,0);
+        graph.addEdge(6,2);
+        graph.addEdge(5,2);
+        graph.addEdge(5,10);
+        graph.addEdge(5,0);
+        graph.addEdge(8,1);
+        graph.addEdge(4,1);
+
+        BreadthFirstPaths breadthFirstPaths = new BreadthFirstPaths(graph, 0);
+
+        System.out.println("7 path?:"+breadthFirstPaths.pathTo(7));
+        System.out.println("dist to 10:"+breadthFirstPaths.distTo(3));
+        System.out.println("10 path?:"+breadthFirstPaths.pathTo(3));
+    }
 }
