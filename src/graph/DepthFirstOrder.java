@@ -25,18 +25,18 @@ public class DepthFirstOrder {
         }
     }
 
-    public void dfs(Digraph digraph, int s){
-        marked[s] = true;
-        pre.enqueue(s);
+    public void dfs(Digraph digraph, int v){
+        marked[v] = true;
+        pre.enqueue(v);
 
-        for (int v : digraph.adj(s)){
-            if (!marked[v]){
-                dfs(digraph, v);
+        for (int w : digraph.adj(v)){
+            if (!marked[w]){
+                dfs(digraph, w);
             }
         }
 
-        post.enqueue(s);
-        reversePost.push(s);
+        post.enqueue(v);
+        reversePost.push(v);
     }
 
     public Queue<Integer> getPre() {
