@@ -1,22 +1,30 @@
-package graph;
+package graph.normal;
 
 /**
  * @author galileo
- * @date 2019/6/20 17:12
+ * @date 2019/6/24 9:28
  */
-public class DeepFirstSearch {
+public class CC {
+    private int[] id;
     private boolean[] marked;
     private int count;
 
-    public DeepFirstSearch(Graph graph, int s) {
+    public CC(Graph graph) {
+        count = 0;
+        id = new int[graph.V()];
         marked = new boolean[graph.V()];
-        dfs(graph, s);
+
+        for (int i = 0;i<graph.V();i++){
+            if (!marked[i]){
+                dfs(graph, i);
+                count++;
+            }
+        }
     }
 
     private void dfs(Graph graph, int s){
         marked[s] = true;
-        count++;
-
+        id[s] = count;
         for (int v : graph.adj(s)){
             if (!marked[v]){
                 dfs(graph, v);
@@ -24,8 +32,8 @@ public class DeepFirstSearch {
         }
     }
 
-    public boolean marked(int w){
-        return marked[w];
+    public boolean connected(int v, int w){
+        return id[v] == id[w];
     }
 
     public int count(){
@@ -51,11 +59,11 @@ public class DeepFirstSearch {
         graph.addEdge(8,1);
         graph.addEdge(4,1);
 
-        DeepFirstSearch deepFirstSearch = new DeepFirstSearch(graph, 0);
+        CC cc = new CC(graph);
 
-        System.out.println("count:"+deepFirstSearch.count());
-        System.out.println("7?:"+deepFirstSearch.marked(7));
-        System.out.println("10?:"+deepFirstSearch.marked(10));
-
+        System.out.println("count:"+cc.count());
+        System.out.println("3&5:"+cc.connected(3, 5));
+        System.out.println("9&3:"+cc.connected(9,3));
     }
+
 }

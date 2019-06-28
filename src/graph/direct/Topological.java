@@ -1,4 +1,4 @@
-package graph;
+package graph.direct;
 
 /**
  * @author galileo

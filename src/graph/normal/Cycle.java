@@ -1,41 +1,38 @@
-package graph;
+package graph.normal;
 
 /**
- * 二分图判断
+ * 环图判断
  * @author galileo
  * @date 2019/6/24 15:31
  */
-public class TwoColor {
+public class Cycle {
     private boolean[] marked;
-    private boolean[] color;
-    private boolean isTwoColored = true;
+    private boolean hasCycle;
 
-    public TwoColor(Graph graph) {
+    public Cycle(Graph graph) {
         marked = new boolean[graph.V()];
-        color = new boolean[graph.V()];
 
-        for (int s = 0;s<graph.V();s++){
-            if (!marked[s]){
-                dfs(graph, s);
+        for (int i = 0; i < graph.V(); i++){
+            if (!marked[i]){
+                dfs(graph, i, i);
             }
         }
     }
 
-    private void dfs(Graph graph, int v){
+    private void dfs(Graph graph, int v, int u){
         marked[v] = true;
 
         for (int w : graph.adj(v)){
             if (!marked[w]){
-                color[w] = !color[v];
-                dfs(graph, w);
-            }else if (color[w] == color[v]){
-                isTwoColored = false;
+                dfs(graph, w, v);
+            }else if (w != u){
+                hasCycle = true;
             }
         }
     }
 
-    public boolean isTwoColored(){
-        return isTwoColored;
+    public boolean isHasCycle(){
+        return hasCycle;
     }
 
     public static void main(String[] args) {
@@ -57,8 +54,8 @@ public class TwoColor {
         graph.addEdge(8,1);
         graph.addEdge(4,1);
 
-        TwoColor twoColor = new TwoColor(graph);
+        Cycle cycle = new Cycle(graph);
 
-        System.out.println("isTwoColored?:"+twoColor.isTwoColored());
+        System.out.println("isHasCycle?:"+cycle.isHasCycle());
     }
 }

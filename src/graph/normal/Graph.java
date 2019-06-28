@@ -1,4 +1,4 @@
-package graph;
+package graph.normal;
 
 import edu.princeton.cs.algs4.Bag;
 
