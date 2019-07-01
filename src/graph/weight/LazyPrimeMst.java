@@ -22,6 +22,7 @@ public class LazyPrimeMst {
             Edge edge = pq.delMin();
             int v = edge.either();
             int w = edge.other(v);
+            //此为延迟，即不管那么多先全添加到优先队列中，到这里才开始检查是否失效（下面的if语句）
             if (marked[v] && marked[w]) {
                 continue;
             }
