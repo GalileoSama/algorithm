@@ -1,5 +1,6 @@
 package graph.weight;
 
+import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.IndexMinPQ;
 
 /**
@@ -57,6 +58,24 @@ public class PrimMst {
                 }
             }
         }
+    }
+
+    public double lazyWeight(){
+        double weight = 0;
+        for (Edge edge : edges()){
+            weight += edge.getWeight();
+        }
+        return weight;
+    }
+
+
+    public Iterable<Edge> edges(){
+        Bag<Edge> mst = new Bag<>();
+        //v从1开始， 0没有edgeTo，见P402的图4.3.12
+        for (int v = 1;v < edgeTo.length;v++){
+            mst.add(edgeTo[v]);
+        }
+        return mst;
     }
 
 }

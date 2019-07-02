@@ -11,11 +11,13 @@ public class LazyPrimeMst {
     private boolean[] marked;
     private Queue<Edge> mst;
     private MinPQ<Edge> pq;
+    private double weight;
 
     public LazyPrimeMst(EdgeWeightedGraph graph) {
         marked = new boolean[graph.getV()];
         mst = new Queue<>();
         pq = new MinPQ<>();
+        weight = 0;
 
         visit(graph, 0);
         while (!pq.isEmpty()){
@@ -28,6 +30,7 @@ public class LazyPrimeMst {
             }
             //添加到最小生成树种
             mst.enqueue(edge);
+            weight += edge.getWeight();
             if (!marked[v]){
                 visit(graph, v);
             }
@@ -50,5 +53,17 @@ public class LazyPrimeMst {
 
     public Iterable<Edge> edges(){
         return mst;
+    }
+
+    public double lazyWeight(){
+        double weight = 0;
+        for (Edge edge : mst){
+            weight += edge.getWeight();
+        }
+        return weight;
+    }
+
+    public double weight(){
+        return weight;
     }
 }
