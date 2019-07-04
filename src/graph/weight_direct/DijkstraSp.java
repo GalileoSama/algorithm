@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.Stack;
  * @author galileo
  * @date 2019/7/3 19:48
  */
-public class DijkstraSt {
+public class DijkstraSp {
     /**优先队列 节点和权重**/
     private IndexMinPQ<Double> pq;
     /**关联 节点和边**/
@@ -16,7 +16,7 @@ public class DijkstraSt {
     /**关联 节点和权重**/
     private double[] distTo;
 
-    public DijkstraSt(EdgeWeightedDigraph digraph, int s) {
+    public DijkstraSp(EdgeWeightedDigraph digraph, int s) {
         pq = new IndexMinPQ<>(digraph.getV());
         edgeTo = new DirectedEdge[digraph.getV()];
         distTo = new double[digraph.getV()];
