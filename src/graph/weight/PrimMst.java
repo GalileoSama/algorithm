@@ -31,7 +31,7 @@ public class PrimMst {
         distTo[0] = 0.0;
         pq.insert(0, 0.0);
         while (!pq.isEmpty()){
-            //取出优先队列中最小的节点 加入到生成树中
+            //取出优先队列中最小的节点(树到w的权重最小的边) 加入到生成树中
             int v = pq.delMin();
             visit(graph, v);
         }
@@ -67,7 +67,6 @@ public class PrimMst {
         }
         return weight;
     }
-
 
     public Iterable<Edge> edges(){
         Bag<Edge> mst = new Bag<>();
