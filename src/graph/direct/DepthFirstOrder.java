@@ -2,6 +2,8 @@ package graph.direct;
 
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
+import graph.weight_direct.DirectedEdge;
+import graph.weight_direct.EdgeWeightedDigraph;
 
 /**
  * @author galileo
@@ -30,6 +32,33 @@ public class DepthFirstOrder {
         pre.enqueue(v);
 
         for (int w : digraph.adj(v)){
+            if (!marked[w]){
+                dfs(digraph, w);
+            }
+        }
+
+        post.enqueue(v);
+        reversePost.push(v);
+    }
+
+    public DepthFirstOrder(EdgeWeightedDigraph digraph) {
+        marked = new boolean[digraph.getV()];
+        pre = new Queue<>();
+        post = new Queue<>();
+        reversePost = new Stack<>();
+        for (int s = 0; s<digraph.getV(); s++){
+            if (!marked[s]){
+                dfs(digraph, s);
+            }
+        }
+    }
+
+    public void dfs(EdgeWeightedDigraph digraph, int v){
+        marked[v] = true;
+        pre.enqueue(v);
+
+        for (DirectedEdge edge : digraph.adj(v)){
+            int w = edge.to();
             if (!marked[w]){
                 dfs(digraph, w);
             }
