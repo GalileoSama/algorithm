@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.Stack;
 import graph.direct.Topological;
 
 /**
+ * 按照拓扑顺序不断的松弛节点
  * @author galileo
  * @date 2019/7/4 11:26
  */
