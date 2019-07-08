@@ -1,7 +1,7 @@
 package graph.direct;
 
-import graph.weight_direct.EdgeWeightedCycleFinder;
-import graph.weight_direct.EdgeWeightedDigraph;
+import graph.weightdirect.EdgeWeightedCycleFinder;
+import graph.weightdirect.EdgeWeightedDigraph;
 
 /**
  * @author galileo

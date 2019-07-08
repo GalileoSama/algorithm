@@ -2,8 +2,8 @@ package graph.direct;
 
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
-import graph.weight_direct.DirectedEdge;
-import graph.weight_direct.EdgeWeightedDigraph;
+import graph.weightdirect.DirectedEdge;
+import graph.weightdirect.EdgeWeightedDigraph;
 
 /**
  * @author galileo

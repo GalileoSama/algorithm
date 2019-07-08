@@ -1,23 +1,20 @@
-package graph.weight_direct;
+package graph.weightdirect;
 
-import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
+import graph.direct.Topological;
 
 /**
+ * 按照拓扑顺序不断的松弛节点
  * @author galileo
- * @date 2019/7/3 19:48
+ * @date 2019/7/4 11:26
  */
-public class DijkstraSp {
-    /**优先队列 节点和权重**/
-    private IndexMinPQ<Double> pq;
+public class AcyclicSp {
     /**关联 节点和边**/
     private DirectedEdge[] edgeTo;
     /**关联 节点和权重**/
     private double[] distTo;
 
-    public DijkstraSp(EdgeWeightedDigraph digraph, int s) {
-        pq = new IndexMinPQ<>(digraph.getV());
+    public AcyclicSp(EdgeWeightedDigraph digraph, int s){
         edgeTo = new DirectedEdge[digraph.getV()];
         distTo = new double[digraph.getV()];
 
@@ -27,25 +24,19 @@ public class DijkstraSp {
         }
 
         distTo[s] = 0;
-        pq.insert(s, 0.0);
-        while (!pq.isEmpty()){
-            //取出优先队列中最小的节点(起点s到w的权重最小) 加入到生成树中
-            relax(digraph, pq.delMin());
+        Topological topological = new Topological(digraph);
+        for (int v:topological.getOrder()){
+            relax(digraph, v);
         }
     }
 
     private void relax(EdgeWeightedDigraph digraph, int v){
         for (DirectedEdge edge : digraph.adj(v)){
             int w = edge.to();
-            //该edge有效（原s->...->w的路径无效，替换为经过v的路径，即从s->...->v->w），松弛
+            //该edge有效，松弛？
             if (distTo[w] > distTo[v] + edge.weight()){
                 distTo[w] = distTo[v] + edge.weight();
                 edgeTo[w] = edge;
-                if (pq.contains(w)){
-                    pq.changeKey(w, distTo[w]);
-                }else {
-                    pq.insert(w, distTo[w]);
-                }
             }
         }
     }

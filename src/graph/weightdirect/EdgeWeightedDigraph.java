@@ -1,4 +1,4 @@
-package graph.weight_direct;
+package graph.weightdirect;
 
 import edu.princeton.cs.algs4.Bag;
 

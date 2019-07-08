@@ -1,26 +1,26 @@
-package graph.weight_direct;
+package graph.weightdirect;
 
 import edu.princeton.cs.algs4.Stack;
 import graph.direct.Topological;
 
 /**
- * 按照拓扑顺序不断的松弛节点
+ * 最长路径
  * @author galileo
  * @date 2019/7/4 11:26
  */
-public class AcyclicSp {
+public class AcyclicLp {
     /**关联 节点和边**/
     private DirectedEdge[] edgeTo;
     /**关联 节点和权重**/
     private double[] distTo;
 
-    public AcyclicSp(EdgeWeightedDigraph digraph, int s){
+    public AcyclicLp(EdgeWeightedDigraph digraph, int s){
         edgeTo = new DirectedEdge[digraph.getV()];
         distTo = new double[digraph.getV()];
 
         //初始化距离为无穷大，方便比较
         for (int i = 0;i<digraph.getV();i++){
-            distTo[i] = Double.POSITIVE_INFINITY;
+            distTo[i] = Double.NEGATIVE_INFINITY;
         }
 
         distTo[s] = 0;
@@ -34,7 +34,7 @@ public class AcyclicSp {
         for (DirectedEdge edge : digraph.adj(v)){
             int w = edge.to();
             //该edge有效，松弛？
-            if (distTo[w] > distTo[v] + edge.weight()){
+            if (distTo[w] < distTo[v] + edge.weight()){
                 distTo[w] = distTo[v] + edge.weight();
                 edgeTo[w] = edge;
             }
@@ -46,7 +46,7 @@ public class AcyclicSp {
     }
 
     public boolean hasPathTo(int v){
-        return distTo[v]<Double.POSITIVE_INFINITY;
+        return distTo[v]>Double.NEGATIVE_INFINITY;
     }
 
     public Iterable<DirectedEdge> pathTo(int v){

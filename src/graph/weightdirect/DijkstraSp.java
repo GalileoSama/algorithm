@@ -1,42 +1,50 @@
-package graph.weight_direct;
+package graph.weightdirect;
 
+import edu.princeton.cs.algs4.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
-import graph.direct.Topological;
 
 /**
- * 最长路径
  * @author galileo
- * @date 2019/7/4 11:26
+ * @date 2019/7/3 19:48
  */
-public class AcyclicLp {
+public class DijkstraSp {
+    /**优先队列 节点和权重**/
+    private IndexMinPQ<Double> pq;
     /**关联 节点和边**/
     private DirectedEdge[] edgeTo;
     /**关联 节点和权重**/
     private double[] distTo;
 
-    public AcyclicLp(EdgeWeightedDigraph digraph, int s){
+    public DijkstraSp(EdgeWeightedDigraph digraph, int s) {
+        pq = new IndexMinPQ<>(digraph.getV());
         edgeTo = new DirectedEdge[digraph.getV()];
         distTo = new double[digraph.getV()];
 
         //初始化距离为无穷大，方便比较
         for (int i = 0;i<digraph.getV();i++){
-            distTo[i] = Double.NEGATIVE_INFINITY;
+            distTo[i] = Double.POSITIVE_INFINITY;
         }
 
         distTo[s] = 0;
-        Topological topological = new Topological(digraph);
-        for (int v:topological.getOrder()){
-            relax(digraph, v);
+        pq.insert(s, 0.0);
+        while (!pq.isEmpty()){
+            //取出优先队列中最小的节点(起点s到w的权重最小) 加入到生成树中
+            relax(digraph, pq.delMin());
         }
     }
 
     private void relax(EdgeWeightedDigraph digraph, int v){
         for (DirectedEdge edge : digraph.adj(v)){
             int w = edge.to();
-            //该edge有效，松弛？
-            if (distTo[w] < distTo[v] + edge.weight()){
+            //该edge有效（原s->...->w的路径无效，替换为经过v的路径，即从s->...->v->w），松弛
+            if (distTo[w] > distTo[v] + edge.weight()){
                 distTo[w] = distTo[v] + edge.weight();
                 edgeTo[w] = edge;
+                if (pq.contains(w)){
+                    pq.changeKey(w, distTo[w]);
+                }else {
+                    pq.insert(w, distTo[w]);
+                }
             }
         }
     }
@@ -46,7 +54,7 @@ public class AcyclicLp {
     }
 
     public boolean hasPathTo(int v){
-        return distTo[v]>Double.NEGATIVE_INFINITY;
+        return distTo[v]<Double.POSITIVE_INFINITY;
     }
 
     public Iterable<DirectedEdge> pathTo(int v){
