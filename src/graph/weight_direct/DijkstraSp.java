@@ -37,7 +37,7 @@ public class DijkstraSp {
     private void relax(EdgeWeightedDigraph digraph, int v){
         for (DirectedEdge edge : digraph.adj(v)){
             int w = edge.to();
-            //该edge有效，松弛？
+            //该edge有效（原s->...->w的路径无效，替换为经过v的路径，即从s->...->v->w），松弛
             if (distTo[w] > distTo[v] + edge.weight()){
                 distTo[w] = distTo[v] + edge.weight();
                 edgeTo[w] = edge;
